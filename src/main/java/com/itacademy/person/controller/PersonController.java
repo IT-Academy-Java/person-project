@@ -1,13 +1,33 @@
 package com.itacademy.person.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.itacademy.person.entity.Person;
+import com.itacademy.person.service.impl.PersonServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
+@RequestMapping("/people")
 public class PersonController {
 
-    @GetMapping("/")
-    public String hello(){
-        return "hello world!!!";
+    @Autowired
+    private PersonServiceImpl personService;
+
+    @GetMapping()
+    public Iterable<Person> getPerson(){
+        Iterable<Person> listPersons = personService.getPeople();
+        return listPersons;
+    }
+
+    @PostMapping
+    public ResponseEntity<Person> createPerson(@RequestBody Person person){
+        return (ResponseEntity<Person>) ResponseEntity.ok().body(personService.save(person));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person, @PathVariable("id") Long id){
+        person.setIdPersona(id);
+        return (ResponseEntity<Person>) ResponseEntity.ok().body(personService.save(person));
     }
 }
