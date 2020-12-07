@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/people")
+@RequestMapping
 public class PersonController {
 
     @Autowired
     private PersonServiceImpl personService;
 
-    @GetMapping()
+    @GetMapping("/")
     public Iterable<Person> getPerson(){
         Iterable<Person> listPersons = personService.getPeople();
         return listPersons;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Person> createPerson(@RequestBody Person person){
         return (ResponseEntity<Person>) ResponseEntity.ok().body(personService.save(person));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Person> updatePerson(@RequestBody Person person, @PathVariable("id") Long id){
         person.setIdPersona(id);
         return (ResponseEntity<Person>) ResponseEntity.ok().body(personService.save(person));
