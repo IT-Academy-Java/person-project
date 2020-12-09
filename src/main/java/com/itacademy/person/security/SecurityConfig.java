@@ -16,21 +16,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    /**@Bean
+    @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    }*/
+    }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                    .password("{noop}123")
-                    .roles("ADMIN","USER")
-                .and()
-                .withUser("user")
-                    .password("{noop}123")
-                    .roles("USER");
+    protected void configure(AuthenticationManagerBuilder builder) throws Exception {
+
+        PasswordEncoder encoder = passwordEncoder();
+        UserBuilder users = User.builder().passwordEncoder(encoder::encode);
+
+        builder.inMemoryAuthentication()
+                .withUser(users.username("admin").password("123").roles("ADMIN","USER"))
+                .withUser(users.username("elena").password("123").roles("USER"));
     }
 
     @Override
@@ -38,13 +37,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .csrf().disable().formLogin().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
 
-                .antMatchers("/create").permitAll()
-                    //.hasAnyRole("USER", "ADMIN")
+                .antMatchers("/")
+                    .hasAnyRole("USER", "ADMIN")
 
-                .antMatchers("/update/**").permitAll();
-                   // .hasRole("ADMIN");
+                .antMatchers("/create")
+                    .hasAnyRole("USER", "ADMIN")
+
+                .antMatchers("/update/**")
+                    .hasRole("ADMIN")
+
+                .and()
+                    .formLogin().permitAll()
+
+                .and()
+                    .logout().permitAll();
 
 
     }
