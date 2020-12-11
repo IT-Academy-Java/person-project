@@ -1,1 +1,1 @@
-# Person project with security
+# Person project with JWT (Jason Web Tokens) and Security
