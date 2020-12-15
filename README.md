@@ -1,6 +1,6 @@
 # Person project with JWT (Jason Web Tokens) and Security
 
-- [Jason Web Token][JWT]
+- [Implementing JWT Authentication on Spring Boot][JWT]
 - [Spring Boot Microservices With JWT][Security]
 
 [JWT]: https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/  
