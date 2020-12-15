@@ -1,4 +1,4 @@
-# Person project with JWT (JSON Web Tokens) and Security
+# Person project with Spring Boot - Microservices
 
 - [Implementing JWT Authentication on Spring Boot][JWT]
 - [Spring Boot Microservices With JWT][Security]
