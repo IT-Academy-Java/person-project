@@ -1,4 +1,5 @@
-# Person project with Spring Boot - Microservices
+# Person project 
+## Spring Boot - Microservices
 
 - [Implementing JWT Authentication on Spring Boot][JWT]
 - [Spring Boot Microservices With JWT][Security]
